@@ -12,10 +12,7 @@ async function run() {
   const [button] = await page.$x("//button[contains(., 'Allow all cookies')]");
   const reservation = await page.$("li[class='reservation']")
 
-
-
   if (button) await button.click();
-
   if (reservation) await reservation.click()
 
 
