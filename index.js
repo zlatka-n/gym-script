@@ -8,12 +8,15 @@ async function run() {
   const page = await browser.newPage()
 
   await page.goto(GYM_URL)
-
+  //cs/menu/rezervace/
   const [button] = await page.$x("//button[contains(., 'Allow all cookies')]");
+  const reservation = await page.$("li[class='reservation']")
 
-  if (button) {
-    await button.click();
-  }
+
+
+  if (button) await button.click();
+
+  if (reservation) await reservation.click()
 
 
   await browser.close()
