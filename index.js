@@ -28,15 +28,19 @@ async function run() {
     await page.waitForSelector(".CybotCookiebotDialogBodyButton")
     await page.click("button[id='CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll']")
 
-    //Type card number
+    //Login
     const cardNumber = await page.$("input[name='uid']")
     const password = await page.$("input[name='heslo']")
 
     await cardNumber.type(CARD_NUMBER)
     await password.type(PASSWORD)
+
+    const logInBtn = await page.$("button[class='button log-in g-recaptcha']")
+
+    logInBtn.click()
   }
 
-  await browser.close()
+  //await browser.close()
 
 }
 
