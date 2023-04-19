@@ -69,7 +69,10 @@ async function run() {
 
   await page.click('button[type="submit"]')
 
-  // await browser.close()
+  await page.waitForSelector('a[title="Book"]')
+  await page.click('a[title="Book"]')
+
+  await browser.close()
 
 }
 
