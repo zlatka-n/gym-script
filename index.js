@@ -56,7 +56,8 @@ async function run() {
 
   await page.waitForSelector('#menu-schedule')
 
-  await page.click("li[id='menu-schedule']")
+  const timetable = await page.$("li[id='menu-schedule']")
+  await timetable.click()
 
   await browser.close()
 
