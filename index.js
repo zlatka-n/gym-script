@@ -69,8 +69,22 @@ async function run() {
 
   await page.click('button[type="submit"]')
 
+  //Click book for selected class
   await page.waitForSelector('a[title="Book"]')
   await page.click('a[title="Book"]')
+
+  //confirm modal for booking with yes
+  await page.waitForSelector('div[class="dialog-window-popup-wrapper"]')
+  await page.click('a[class="button orange yes"]')
+
+  const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
+  await okBtnModal.click()
+
+  await page.waitForSelector("aside[class='right']", { visible: true })
+
+  ///wait and click logout 
+  await page.waitForTimeout(1000);
+  await page.click("aside[class='right']")
 
   await browser.close()
 
