@@ -59,6 +59,11 @@ async function run() {
   const timetable = await page.$("li[id='menu-schedule']")
   await timetable.click()
 
+  await page.waitForSelector('#location')
+  await page.select('select#location', '3')
+  await page.select('select#group', '9*bosu')
+  await page.click('button[type="submit"]')
+
   await browser.close()
 
 }
