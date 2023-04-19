@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const GYM_URL = process.env.GYM_URL
 const CARD_NUMBER = process.env.CARD_NUMBER
+const PASSWORD = process.env.PASSWORD
 
 async function run() {
   const browser = await puppeteer.launch({ headless: false, })
@@ -29,9 +30,12 @@ async function run() {
 
     //Type card number
     const cardNumber = await page.$("input[name='uid']")
-    await cardNumber.type(CARD_NUMBER)
+    const password = await page.$("input[name='heslo']")
 
+    await cardNumber.type(CARD_NUMBER)
+    await password.type(PASSWORD)
   }
+
   await browser.close()
 
 }
