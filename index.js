@@ -1,13 +1,25 @@
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-extra')
+const userAgent = require('user-agents')
 require('dotenv').config()
 
 const GYM_URL = process.env.GYM_URL
 const CARD_NUMBER = process.env.CARD_NUMBER
 const PASSWORD = process.env.PASSWORD
 
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
+
 async function run() {
-  const browser = await puppeteer.launch({ headless: false, })
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: null,
+    slowMo: 10,
+  })
   const page = await browser.newPage()
+
+
+  await page.setUserAgent(userAgent.random().toString())
 
   await page.goto(GYM_URL)
 
@@ -36,7 +48,15 @@ async function run() {
 
   const logInBtn = await page.$("button[class='button log-in g-recaptcha']")
 
-  logInBtn.click()
+  await Promise.all([
+    logInBtn.click(),
+    page.waitForNavigation
+  ])
+
+
+  await page.waitForSelector('#menu-schedule')
+
+  await page.click("li[id='menu-schedule']")
 
   await browser.close()
 
