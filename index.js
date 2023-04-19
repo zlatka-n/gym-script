@@ -60,11 +60,16 @@ async function run() {
   await timetable.click()
 
   await page.waitForSelector('#location')
-  await page.select('select#location', '3')
-  await page.select('select#group', '9*bosu')
+
+  const selectLocation = await page.$("select[id='location']")
+  const selectClass = await page.$("select[id='group']")
+
+  await selectLocation.select('3')  //select Karlin's value
+  await selectClass.select('9*bosu')
+
   await page.click('button[type="submit"]')
 
-  await browser.close()
+  // await browser.close()
 
 }
 
