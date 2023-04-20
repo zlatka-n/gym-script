@@ -5,20 +5,15 @@ require('dotenv').config()
 const GYM_URL = process.env.GYM_URL
 const CARD_NUMBER = process.env.CARD_NUMBER
 const PASSWORD = process.env.PASSWORD
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
-const MY_PHONE_NUMBER = process.env.MY_PHONE_NUMBER
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER
-
-const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+const { sendSms } = require('./utils')
 puppeteer.use(StealthPlugin())
 
 
 async function run() {
   const browser = await puppeteer.launch({
-    headless: false, //set true for not launching a browser
+    headless: false,
     defaultViewport: null,
     slowMo: 10,
   })
@@ -89,16 +84,7 @@ async function run() {
     return element.textContent
   })
 
-  if (confirmation) {
-    client.messages
-      .create({
-        body: confirmation,
-        from: TWILIO_PHONE_NUMBER,
-        to: MY_PHONE_NUMBER
-      })
-      .then(message => console.log(message.sid))
-      .catch(err => console.log(err))
-  }
+  if (confirmation) sendSms(confirmation)
 
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
@@ -109,7 +95,7 @@ async function run() {
   await page.waitForTimeout(1000);
   await page.click("aside[class='right']")
 
-  // await browser.close()
+  await browser.close()
 
 }
 
