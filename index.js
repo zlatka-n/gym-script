@@ -12,15 +12,13 @@ puppeteer.use(StealthPlugin())
 
 async function run() {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: false, //set true for not launching a browser
     defaultViewport: null,
     slowMo: 10,
   })
+
   const page = await browser.newPage()
-
-
   await page.setUserAgent(userAgent.random().toString())
-
   await page.goto(GYM_URL)
 
   const [buttonCookies] = await page.$x("//button[contains(., 'Allow all cookies')]");
@@ -29,7 +27,6 @@ async function run() {
   if (buttonCookies) await buttonCookies.click();
 
   ///Navigate to login page
-
   await Promise.all([
     reservation.click(),
     page.waitForNavigation
@@ -40,11 +37,11 @@ async function run() {
   await page.click("button[id='CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll']")
 
   //Login
-  const cardNumber = await page.$("input[name='uid']")
-  const password = await page.$("input[name='heslo']")
+  const cardNumberInput = await page.$("input[name='uid']")
+  const passwordInput = await page.$("input[name='heslo']")
 
-  await cardNumber.type(CARD_NUMBER)
-  await password.type(PASSWORD)
+  await cardNumberInput.type(CARD_NUMBER)
+  await passwordInput.type(PASSWORD)
 
   const logInBtn = await page.$("button[class='button log-in g-recaptcha']")
 
@@ -52,7 +49,6 @@ async function run() {
     logInBtn.click(),
     page.waitForNavigation
   ])
-
 
   await page.waitForSelector('#menu-schedule')
 
@@ -73,10 +69,11 @@ async function run() {
   await page.waitForSelector('a[title="Book"]')
   await page.click('a[title="Book"]')
 
-  //confirm modal for booking with yes
+  //modal: confirm booking with yes
   await page.waitForSelector('div[class="dialog-window-popup-wrapper"]')
   await page.click('a[class="button orange yes"]')
 
+  //confirm another modal, omg
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
 
