@@ -71,9 +71,17 @@ async function run() {
 
   //modal: confirm booking with yes
   await page.waitForSelector('div[class="dialog-window-popup-wrapper"]')
+
   await page.click('a[class="button orange yes"]')
 
-  //confirm another modal, omg
+  await page.waitForTimeout(3000);
+
+  page.waitForSelector('div[class="dialog-window-popup-wrapper"]', { visible: true })
+
+  const confirmation = await page.$eval('div[id="modal-body-1"]', element => {
+    return element.textContent
+  })
+
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
 
