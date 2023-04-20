@@ -13,6 +13,7 @@
     "puppeteer": "^19.9.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "twilio": "^4.10.0",
     "user-agents": "^1.0.1354"
   }
 }
