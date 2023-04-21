@@ -31,7 +31,7 @@ $ npm start
   if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
 ```
 
-- Twilio offers free trial, which enables you to send free SMS messages to your verified phone number.
+- Twilio offers free trial with credit, which enables you to send SMS messages to your verified phone number.
 - After creating account on [Twilio](https://www.twilio.com/try-twilio), get your: _TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER_ and fill those values in .env file. Continue below.
 
 #### Create .env file in the root directory. Fill in values for these variables:
