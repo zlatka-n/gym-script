@@ -21,9 +21,9 @@ Finally, to use this script run:
 $ npm start
 ```
 
-###Prerequisites
+### Prerequisites
 
-##### Create Twilio account for sending SMS confirmations.
+#### Create Twilio account for sending SMS confirmations.
 
 - If you don't need sms confirmations, comment this line in index.js
 
@@ -34,7 +34,7 @@ $ npm start
 - Twilio offers free trial, which enables you to send free SMS messages to your verified phone number.
 - After creating account on [Twilio](https://www.twilio.com/try-twilio), get your: _TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER_ and fill those values in .env file. Continue below.
 
-##### Create .env file in the root directory. Fill in values for these variables:
+#### Create .env file in the root directory. Fill in values for these variables:
 
 ```
 GYM_URL=https://www.XXX.cz/
@@ -50,7 +50,7 @@ TWILIO_PHONE_NUMBER=+162XXXXX7
 
 ### Troubleshooting
 
-##### You can't log in with correct username and password, and see this error:
+#### You can't log in with correct username and password, and see this error:
 
 [![Screenshot-2023-04-20-at-13-41-06.png](https://i.postimg.cc/T3MB4CWk/Screenshot-2023-04-20-at-13-41-06.png)](https://postimg.cc/Vdg7S9gM)
 
