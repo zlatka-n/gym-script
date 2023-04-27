@@ -46,7 +46,7 @@ MY_PHONE_NUMBER=+420XXXXXXX2
 TWILIO_PHONE_NUMBER=+162XXXXX7
 ```
 
-- For more information, how to use env. file see [dotenv](https://github.com/motdotla/dotenv)
+- For more information, how to use .env file see [dotenv](https://github.com/motdotla/dotenv)
 
 ### Troubleshooting
 
