@@ -25,7 +25,7 @@ $ npm start
 
 #### Create Twilio account for sending SMS confirmations.
 
-- If you don't need sms confirmations, comment this line in index.js
+- If you don't need sms confirmations, comment this line in utils.js
 
 ```
   if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
