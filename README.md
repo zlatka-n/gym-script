@@ -1,6 +1,6 @@
 ## Gym class script
 
-- This script books gym class for you. When booking is successfull, it will also send an sms confirmation to your phone number. In the end, it will log you out and close your browser.
+- This script books gym class, or cancels gym class reservation for you. When booking is successfull, it will also send an sms confirmation to your phone number. In the end, it will log you out and close your browser.
 
 ### Browser Support
 
@@ -47,6 +47,21 @@ TWILIO_PHONE_NUMBER=+162XXXXX7
 ```
 
 - For more information, how to use .env file see [dotenv](https://github.com/motdotla/dotenv)
+
+### Cancel reservation
+
+in index.js uncomment this line:
+
+```
+// cancelReservation()
+```
+
+and don't forget to comment this booking function:
+
+```
+doBooking()
+
+```
 
 ### Troubleshooting
 
