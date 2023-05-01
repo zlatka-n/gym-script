@@ -100,7 +100,7 @@ async function doBooking() {
     return element.textContent
   })
 
-  // if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
+  if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
 
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
