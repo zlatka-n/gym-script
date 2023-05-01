@@ -100,7 +100,7 @@ async function doBooking() {
     return element.textContent
   })
 
-  if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
+  // if (confirmation) sendSms(confirmation) //comment this line, if you don't want to send sms to your phone
 
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
@@ -115,4 +115,78 @@ async function doBooking() {
 
 }
 
-module.exports = { sendSms, doBooking }
+async function cancelReservation() {
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: null,
+    slowMo: 10,
+  })
+
+  const page = await browser.newPage()
+  await page.setUserAgent(userAgent.random().toString())
+  await page.goto(GYM_URL)
+
+  const [buttonCookies] = await page.$x("//button[contains(., 'Allow all cookies')]");
+  const reservation = await page.$("li[class='reservation']")
+
+  if (buttonCookies) await buttonCookies.click();
+
+  ///Navigate to login page
+  await Promise.all([
+    reservation.click(),
+    page.waitForNavigation
+  ])
+
+  //Accept all cookies again
+  await page.waitForSelector(".CybotCookiebotDialogBodyButton")
+  await page.click("button[id='CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll']")
+
+  //Login
+  const cardNumberInput = await page.$("input[name='uid']")
+  const passwordInput = await page.$("input[name='heslo']")
+
+  await cardNumberInput.type(CARD_NUMBER)
+  await passwordInput.type(PASSWORD)
+
+  const logInBtn = await page.$("button[class='button log-in g-recaptcha']")
+
+  await Promise.all([
+    logInBtn.click(),
+    page.waitForNavigation
+  ])
+
+  await page.waitForSelector('#menu-reservation')
+
+  const myReservations = await page.$("a[title='Current reservations']")
+
+  await Promise.all([
+    await myReservations.click(),
+    page.waitForNavigation
+  ])
+
+  // await page.waitForSelector('#menu-reservation')
+  await page.waitForSelector("a[title='Cancel reservation']")
+  const cancelReservationBtn = await page.$("a[title='Cancel reservation']")
+  await cancelReservationBtn.click()
+
+  page.waitForSelector('div[class="dialog-window-popup-wrapper"]', { visible: true })
+  await page.click('a[class="button orange yes"]')
+
+  const confirmation = await page.$eval('div[id="modal-body-1"]', element => {
+    return element.textContent
+  })
+
+  if (confirmation) console.log(confirmation) //comment this line, if you don't want to send sms to your phone
+
+  const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
+  await okBtnModal.click()
+
+  await page.waitForSelector("aside[class='right']", { visible: true })
+
+  ///wait and click logout 
+  await page.waitForTimeout(1000);
+  await page.click("aside[class='right']")
+
+}
+
+module.exports = { sendSms, doBooking, cancelReservation }
