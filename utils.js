@@ -119,7 +119,7 @@ async function cancelReservation() {
   const browser = await puppeteer.launch({
     headless: false,
     defaultViewport: null,
-    slowMo: 10,
+    // slowMo: 10,
   })
 
   const page = await browser.newPage()
@@ -164,7 +164,6 @@ async function cancelReservation() {
     page.waitForNavigation
   ])
 
-  // await page.waitForSelector('#menu-reservation')
   await page.waitForSelector("a[title='Cancel reservation']")
   const cancelReservationBtn = await page.$("a[title='Cancel reservation']")
   await cancelReservationBtn.click()
@@ -176,7 +175,7 @@ async function cancelReservation() {
     return element.textContent
   })
 
-  if (confirmation) console.log(confirmation) //comment this line, if you don't want to send sms to your phone
+  if (confirmation) console.log(confirmation)
 
   const okBtnModal = await page.waitForSelector('div[id="modal-buttons-1"]', { visible: true })
   await okBtnModal.click()
@@ -186,6 +185,8 @@ async function cancelReservation() {
   ///wait and click logout 
   await page.waitForTimeout(1000);
   await page.click("aside[class='right']")
+
+  await browser.close()
 
 }
 
