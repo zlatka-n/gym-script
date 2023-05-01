@@ -1,4 +1,6 @@
-const { doBooking } = require('./utils')
+const { doBooking, cancelReservation } = require('./utils')
 
 
 doBooking()
+
+// cancelReservation()
